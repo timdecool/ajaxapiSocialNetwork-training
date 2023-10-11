@@ -75,9 +75,44 @@ async function fetchUsersPosts() {
 
 function displayPostModal(e) {
     let postId = e.target.parentNode.id.split('-')[1];
+
+    // Production du fond du modal
     let modalBackground = document.createElement('div');
     modalBackground.classList.add("modal-background");
     document.body.appendChild(modalBackground);
+
+    // Production du modal
+    let modal = document.createElement('div');
+    modal.classList.add('post-card');
+    modalBackground.appendChild(modal);
+
+    // Remplissage du modal
+    modal.innerHTML = `
+    <div class='post-author'>
+        <img class='avatar' src='${usersImg[posts[postId-1].userId-1]}' alt='Photo de profil de ${e.target.parentNode.children[0].children[1].children[0].textContent}'></img>
+        <div>
+            <p>${e.target.parentNode.children[0].children[1].children[0].textContent}</p>
+            <p class='username'>${e.target.parentNode.children[0].children[1].children[1].textContent}</p>
+        </div>
+        <div class='close-button'>
+            <div class='close-1'></div>
+            <div class='close-2'></div>
+        </div>
+    </div>
+    <h2 class='post-title'>${e.target.textContent}</h2>
+    <p>${e.target.nextElementSibling.textContent}</p>
+    <div class='engagement'>
+        <div class='commBtn'>Commentaires &darr;</div>
+    </div> 
+    `;
+    let commBtn = document.querySelector('.modal-background .commBtn');
+    commBtn.addEventListener('click',toggleComments);
+
+    let closeBtn = document.querySelector('.close-button');
+    closeBtn.addEventListener('click',hidePostModal);  
+}
+
+function hidePostModal() {
     
 }
 
